@@ -1,40 +1,17 @@
-let light = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-});
-let dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; CartoDB'
-});
+const map = L.map('map').setView([47.5, -120.5], 7);
 
-let map = L.map('map', {
-  center: [47.5, -120.5],
-  zoom: 7,
-  layers: [light]
-});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: '© OpenStreetMap'
+}).addTo(map);
 
-let currentBase = 'light';
-document.getElementById('themeToggle').onclick = () => {
-  if (currentBase === 'light') {
-    map.removeLayer(light);
-    map.addLayer(dark);
-    currentBase = 'dark';
-  } else {
-    map.removeLayer(dark);
-    map.addLayer(light);
-    currentBase = 'light';
-  }
-};
-
-// Load lake GeoJSON
-fetch('lakes.geojson')
-  .then(res => res.json())
+fetch('https://your-username.github.io/wa-lake-map/lakes.geojson')
+  .then(response => response.json())
   .then(data => {
-    L.geoJSON(data, {
-      onEachFeature: (feature, layer) => {
-        layer.bindPopup(\`<b>\${feature.properties.name}</b><br>Sample depth: \${feature.properties.depth} ft\`);
-      },
-      style: {
-        color: '#3399ff',
-        weight: 2
-      }
-    }).addTo(map);
+    L.geoJSON(data).addTo(map);
   });
+
+const toggle = document.getElementById('toggle-mode');
+toggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+});

@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lake Chelan",
+        "depth": 1486
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-120.5, 47.9], [-120.4, 47.9], [-120.4, 47.8], [-120.5, 47.8], [-120.5, 47.9]]
+        ]
+      }
+    }
+  ]
+}
